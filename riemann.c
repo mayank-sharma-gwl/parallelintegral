@@ -21,7 +21,7 @@ int main() {
             double h = (b - a) / n;
             double s = 0.0;
             sq[k] = 0;
-            // Ждем пока все потоки закончат обнуление sq[k], s #pragma omp barrier
+
             #pragma omp barrier
             #pragma omp for nowait
             for (int i = 0; i < n; i++) {
@@ -29,7 +29,7 @@ int main() {
             }
             #pragma omp atomic
             sq[k] += s * h;
-            // Ждем пока все потоки обновят sq[k]
+
             #pragma omp barrier
             if (n > n0) {
                 delta = fabs(sq[k] - sq[k ^ 1]) / 3.0;
